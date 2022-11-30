@@ -54,7 +54,7 @@ try:
 
     tickers = {
         'sp500': 'SPY',
-        'nikkei225': 'NKY',                      # ティッカーを用いて会社名の辞書リストを作成
+        'nikkei225': 'NI225',                      # ティッカーを用いて会社名の辞書リストを作成
         'google': 'GOOGL',
         'apple': 'AAPL',
         'meta': 'META',
