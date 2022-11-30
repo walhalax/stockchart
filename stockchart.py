@@ -53,8 +53,7 @@ try:
     )
 
     tickers = {
-        'sp500': 'SPY',
-        'nikkei225': 'NI225',                      # ティッカーを用いて会社名の辞書リストを作成
+        'sp500': 'SPY',                     # ティッカーを用いて会社名の辞書リストを作成
         'google': 'GOOGL',
         'apple': 'AAPL',
         'meta': 'META',
@@ -77,7 +76,7 @@ try:
     companies = st.multiselect(
         '表示したい会社名を選択してください。',
         list(df.index),    # df の Index から会社名を取得
-        ['sp500', 'nikkei225', 'google', 'amazon', 'meta', 'apple', 'microsoft', 'tesla', 'nvidia', 'square', 'visa', 'cocacola', 'mcdonald', 'moderna', 'pfizer',]
+        ['sp500', 'google', 'amazon', 'meta', 'apple', 'microsoft', 'tesla', 'nvidia', 'square', 'visa', 'cocacola', 'mcdonald', 'moderna', 'pfizer',]
     )
     # 選択がなかった場合のエラーと、選択された場合の処理を追加
     if not companies:
