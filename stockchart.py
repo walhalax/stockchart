@@ -10,7 +10,7 @@ st.write('モバイルの場合は画面左上の">"からサイドバーを表�
 
 # サイドバーに表示する文言を登録
 st.sidebar.write("""
-スライダーで表示日数範囲を指定してください。
+スライダーで表示範囲を指定してください。
 """)
 
 st.sidebar.write("""
@@ -19,7 +19,7 @@ st.sidebar.write("""
 
 # 表j日数変更のためのスライダーを追加
 # 作成済みのコードに合わせるために日数を'days'で定義
-days = st.sidebar.slider('表示する日数の範囲を指定してください。', 1, 720 ,30)
+days = st.sidebar.slider('表示したい日数の範囲を指定してください。', 1, 720 ,30)
 
 # メイン画面の表示文言を登録
 # 日数は可変されるので日数部分にfstringsメソッドを置く
@@ -48,7 +48,7 @@ try:
     ## 株価(ドル)
     """)
     ymin, ymax = st.sidebar.slider(
-        '表示する株価の範囲を指定してください。',
+        '表示したいグラフ上の株価の範囲を指定してください。',
         0.0, 300.0, (0.0, 400.0)
     )
 
@@ -73,7 +73,7 @@ try:
 
     # 会社名選択セクションの作成
     companies = st.multiselect(
-        '会社名を選択してください。',
+        '表示したい会社名を選択してください。',
         list(df.index),    # df の Index から会社名を取得
         ['google', 'amazon', 'meta', 'apple', 'microsoft', 'tesla', 'nvidia', 'square', 'visa', 'cocacola', 'mcdonald', 'moderna', 'pfizer',]
     )
