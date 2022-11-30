@@ -83,7 +83,7 @@ try:
         st.error('少なくとも一社は選択してください。')
     else:
         data = df.loc[companies]
-        st.write("### 株価(米ドル)") # 株価リストを表示
+        st.write("### 株価(米ドル)", data.sort_index()) # 株価リストを表示
         data = data.T.reset_index()                 # データ転置
         data = pd.melt(data, id_vars=['Date']).rename(
             columns={'value': 'Stock Prices(USD)'}  # 'Value'カラム名を株価の表示にする
