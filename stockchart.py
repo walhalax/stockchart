@@ -45,7 +45,7 @@ def get_data(days, tickers):
 # エラー時の対処のため"try"の中に入れ子にする
 try:
     st.sidebar.write("""
-    ## 株価(ドル)
+    ## 株価(米ドル)
     """)
     ymin, ymax = st.sidebar.slider(
         '表示したいグラフ上の株価の範囲を指定してください。',
@@ -82,7 +82,7 @@ try:
         st.error('少なくとも一社は選択してください。')
     else:
         data = df.loc[companies]
-        st.write("### 株価(USD)", data.sort_index()) # 株価リストを表示
+        st.write("### 株価(米ドル)", data.sort_index()) # 株価リストを表示
         data = data.T.reset_index()                 # データ転置
         data = pd.melt(data, id_vars=['Date']).rename(
             columns={'value': 'Stock Prices(USD)'}  # 'Value'カラム名を株価の表示にする
