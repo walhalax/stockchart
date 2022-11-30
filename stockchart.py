@@ -53,7 +53,7 @@ try:
     )
 
     tickers = {
-        'sp500': 'US500',                       # ティッカーを用いて会社名の辞書リストを作成
+        'sp500': 'INX',                       # ティッカーを用いて会社名の辞書リストを作成
         'google': 'GOOGL',
         'apple': 'AAPL',
         'meta': 'META',
