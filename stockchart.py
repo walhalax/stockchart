@@ -89,7 +89,7 @@ try:
         )
 
     # チャート表示部分の実装
-
+        st.write("### 株価チャート")
         chart = (
             alt.Chart(data)
             .mark_line(opacity=0.8)
