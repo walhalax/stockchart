@@ -7,7 +7,7 @@ st.title('米国株価可視化アプリ')
 
 # サイドバーに表示する文言を登録
 st.sidebar.write("""
-# GAFA株価
+# 米国主要企業株価
 こちらは株価可視化ツールです。以下のオプションから表示日数を指定してください。
 """)
 
@@ -17,12 +17,12 @@ st.sidebar.write("""
 
 # 表j日数変更のためのスライダーを追加
 # 作成済みのコードに合わせるために日数を'days'で定義
-days = st.sidebar.slider('日数', 1, 50 ,20)
+days = st.sidebar.slider('日数', 1, 720 ,30)
 
 # メイン画面の表示文言を登録
 # 日数は可変されるので日数部分にfstringsメソッドを置く
 st.write(f"""
-### 過去 **{days}日間**のGAFAの株価
+### 過去 **{days}日間**の米国の株価
 """)
 
 @st.cache                                             # データ保持にキャッシュを使用する
@@ -39,4 +39,69 @@ def get_data(days, tickers):
         df = pd.concat([df, hist])                    # 'concat'で'df'に'hist'を追加
     return df
 
+
+# エラー時の対処のため"try"の中に入れ子にする
+try:
+    st.sidebar.write("""
+    ## 株価の範囲指定
+    """)
+    ymin, ymax = st.sidebar.slider(
+        '範囲を指定してください。',
+        0.0, 300.0, (0.0, 400.0)
+    )
+
+    tickers = {                                       # ティッカーを用いて会社名の辞書リストを作成
+        'google': 'GOOGL',
+        'apple': 'AAPL',
+        'meta': 'META',
+        'amazon': 'AMZN',
+        'microsoft': 'MSFT',
+        'netflix': 'NFLX',
+        'tesla': 'TSLA',
+        'nvidia': 'NVDA',
+        'square': 'SQ',
+        'visa': 'V',
+        'cocacola': 'KO',
+        'mcdonald': 'MCD',
+        'moderna': 'MRNA',
+        'pfizer': 'PFE',
+    }
+    # 取得したデータを'df’に格納する
+    df = get_data(days, tickers)
+
+    # 会社名選択セクションの作成
+    companies = st.multiselect(
+        '会社名を選択してください。',
+        list(df.index),    # df の Index から会社名を取得
+        ['google', 'amazon', 'meta', 'apple', 'microsoft', 'tesla', 'nvidia', 'square', 'visa', 'cocacola', 'mcdonald', 'moderna', 'pfizer',]
+    )
+    # 選択がなかった場合のエラーと、選択された場合の処理を追加
+    if not companies:
+        st.error('少なくとも一社は選択してください。')
+    else:
+        data = df.loc[companies]
+        st.write("### 株価(USD)", data.sort_index()) # 株価リストを表示
+        data = data.T.reset_index()                 # データ転置
+        data = pd.melt(data, id_vars=['Date']).rename(
+            columns={'value': 'Stock Prices(USD)'}  # 'Value'カラム名を株価の表示にする
+        )
+
+    # チャート表示部分の実装
+
+        chart = (
+            alt.Chart(data)
+            .mark_line(opacity=0.8)
+            .encode(
+                x="Date:T",
+                y=alt.Y("Stock Prices(USD):Q", stack=None),
+                color='Name:N'
+        )
+    )
+
+    st.altair_chart(chart, use_container_width=True)
+# エラーメッセージの実装
+except:
+    st.error(
+        "おっと！何かエラーが起きているようです。"
+    )
 
